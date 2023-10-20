@@ -26,6 +26,7 @@ from tensorflow_federated.python.common_libs import structure
 from tensorflow_federated.python.core.impl.computation import function_utils
 from tensorflow_federated.python.core.impl.context_stack import context_stack_base
 from tensorflow_federated.python.core.impl.jax_context import jax_computation_context
+from tensorflow_federated.python.core.impl.types import array_shape
 from tensorflow_federated.python.core.impl.types import computation_types
 from tensorflow_federated.python.core.impl.types import type_analysis
 from tensorflow_federated.python.core.impl.types import typed_object
@@ -112,10 +113,9 @@ def _tff_type_to_xla_serializer_arg(
   """
 
   def _undefined_shape_predicate(type_element: computation_types.Type) -> bool:
-    if isinstance(type_element, computation_types.TensorType):
-      if not type_element.shape.is_fully_defined():
-        return True
-    return False
+    if not isinstance(type_element, computation_types.TensorType):
+      return False
+    return array_shape.is_fully_defined(type_element.shape)
 
   has_undefined_shapes = type_analysis.contains(
       type_spec, _undefined_shape_predicate

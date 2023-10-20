@@ -391,11 +391,14 @@ def federated_mean(value, weight=None):
     weight = value_utils.ensure_federated_value(
         weight, placements.CLIENTS, 'weight to use in averaging'
     )
-    py_typecheck.check_type(
-        weight.type_signature.member,  # pytype: disable=attribute-error
-        computation_types.TensorType,
-    )
-    if weight.type_signature.member.shape.ndims != 0:  # pytype: disable=attribute-error
+    if (
+        not isinstance(weight.type_signature, computation_types.FederatedType)
+        or not isinstance(
+            weight.type_signature.member, computation_types.TensorType
+        )
+        or weight.type_signature.member.shape is None
+        or weight.type_signature.member.shape
+    ):
       raise TypeError(
           'The weight type {} is not a federated scalar.'.format(
               weight.type_signature

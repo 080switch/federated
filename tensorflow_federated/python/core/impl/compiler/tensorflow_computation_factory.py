@@ -23,6 +23,7 @@ from tensorflow_federated.proto.v0 import computation_pb2 as pb
 from tensorflow_federated.python.common_libs import py_typecheck
 from tensorflow_federated.python.common_libs import structure
 from tensorflow_federated.python.core.impl.compiler import local_computation_factory_base
+from tensorflow_federated.python.core.impl.types import array_shape
 from tensorflow_federated.python.core.impl.types import computation_types
 from tensorflow_federated.python.core.impl.types import type_analysis
 from tensorflow_federated.python.core.impl.types import type_conversions
@@ -384,7 +385,7 @@ def create_binary_operator_with_upcast(
       value_tensor_type = type_conversions.type_from_tensors(to_pack)
       if type_spec.is_assignable_from(value_tensor_type):
         return to_pack
-      elif not type_spec.shape.is_fully_defined():  # pytype: disable=attribute-error
+      elif not array_shape.is_fully_defined(type_spec.shape):
         raise TypeError(
             'Cannot generate TensorFlow creating binary operator '
             'with first type not assignable from second, and '

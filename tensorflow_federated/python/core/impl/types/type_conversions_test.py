@@ -359,7 +359,7 @@ class TypeToTfDtypesAndShapesTest(absltest.TestCase):
         type_signature
     )
     _assert_structure_eq(dtypes, tf.int32)
-    _assert_structure_eq(shapes, tf.TensorShape([]))
+    _assert_structure_eq(shapes, [])
 
   def test_with_int_vector(self):
     type_signature = computation_types.TensorType(tf.int32, [10])
@@ -367,7 +367,7 @@ class TypeToTfDtypesAndShapesTest(absltest.TestCase):
         type_signature
     )
     _assert_structure_eq(dtypes, tf.int32)
-    _assert_structure_eq(shapes, tf.TensorShape([10]))
+    _assert_structure_eq(shapes, [10])
 
   def test_with_tensor_triple(self):
     type_signature = computation_types.StructWithPythonType(
@@ -385,9 +385,9 @@ class TypeToTfDtypesAndShapesTest(absltest.TestCase):
     _assert_structure_eq(
         shapes,
         {
-            'a': tf.TensorShape([5]),
-            'b': tf.TensorShape([]),
-            'c': tf.TensorShape([3]),
+            'a': [5],
+            'b': [],
+            'c': [3],
         },
     )
 
@@ -423,8 +423,8 @@ class TypeToTfDtypesAndShapesTest(absltest.TestCase):
     _assert_structure_eq(
         shapes,
         {
-            'a': tf.TensorShape([]),
-            'b': {'c': tf.TensorShape([]), 'd': tf.TensorShape([20])},
+            'a': [],
+            'b': {'c': [], 'd': [20]},
             'e': (),
         },
     )

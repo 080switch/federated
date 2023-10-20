@@ -1196,12 +1196,12 @@ class GraphUtilsTest(tf.test.TestCase):
     tensorflow_utils.make_data_set_from_elements(
         tf.compat.v1.get_default_graph(),
         [np.array([1, 2]), np.array([3])],
-        computation_types.TensorType(tf.int32, tf.TensorShape([None])),
+        computation_types.TensorType(tf.int32, [None]),
     )
     tensorflow_utils.make_data_set_from_elements(
         tf.compat.v1.get_default_graph(),
         [{'x': np.array([1, 2])}, {'x': np.array([3])}],
-        [('x', computation_types.TensorType(tf.int32, tf.TensorShape([None])))],
+        [('x', computation_types.TensorType(tf.int32, [None]))],
     )
 
   def test_make_data_set_from_elements_with_odd_all_batches(self):
@@ -1213,7 +1213,7 @@ class GraphUtilsTest(tf.test.TestCase):
             np.array([4, 5, 6]),
             np.array([7, 8]),
         ],
-        computation_types.TensorType(tf.int32, tf.TensorShape([None])),
+        computation_types.TensorType(tf.int32, [None]),
     )
     tensorflow_utils.make_data_set_from_elements(
         tf.compat.v1.get_default_graph(),
@@ -1223,19 +1223,19 @@ class GraphUtilsTest(tf.test.TestCase):
             {'x': np.array([4, 5, 6])},
             {'x': np.array([7, 8])},
         ],
-        [('x', computation_types.TensorType(tf.int32, tf.TensorShape([None])))],
+        [('x', computation_types.TensorType(tf.int32, [None]))],
     )
 
   def test_make_data_set_from_elements_with_just_one_batch(self):
     tensorflow_utils.make_data_set_from_elements(
         tf.compat.v1.get_default_graph(),
         [np.array([1])],
-        computation_types.TensorType(tf.int32, tf.TensorShape([None])),
+        computation_types.TensorType(tf.int32, [None]),
     )
     tensorflow_utils.make_data_set_from_elements(
         tf.compat.v1.get_default_graph(),
         [{'x': np.array([1])}],
-        [('x', computation_types.TensorType(tf.int32, tf.TensorShape([None])))],
+        [('x', computation_types.TensorType(tf.int32, [None]))],
     )
 
   def test_make_dataset_from_variant_tensor_constructs_dataset(self):
